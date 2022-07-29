@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from .models import BlogModel
+from .models import BlogModel, ReviewModel
 from django.urls import reverse_lazy
 from django.db import IntegrityError
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 
 
 def signupview(request):
@@ -20,6 +21,23 @@ def signupview(request):
         return render(request, 'signup.html', {})
     return render(request, 'signup.html', {})
 
+def loginview(request):
+    if request.method == 'POST':
+        username_data = request.POST['username_data']
+        password_data = request.POST['password_data']
+        user = authenticate(username=username_data, password=password_data)
+        if user is not None:
+            login(request, user)
+            return redirect('list')
+        else:
+            return redirect('login')
+    return render(request, 'login.html')
+
+def listview(request):
+    object_list = ReviewModel.objects.all()
+    return render(request, 'list.html',{'object_list': object_list})
+    
+'''    
 class BlogList(ListView):
     template_name = 'list.html'
     model = BlogModel
@@ -40,3 +58,4 @@ class BlogUpdate(UpdateView):
     model = BlogModel
     fields = ('title', 'content', 'category')
     success_url = reverse_lazy('list')
+'''

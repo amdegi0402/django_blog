@@ -1,5 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
+EVALUATION_CHOICES = [('good', 'good'),('bad', 'bad')]
+class ReviewModel(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    
 class SampleModel(models.Model):
     title = models.CharField(max_length=100)
     number = models.IntegerField()
@@ -17,4 +24,14 @@ class BlogModel(models.Model):
     #admin/ タイトル表示
     def __str__(self):
         return self.title
+
+EVALUTION_CHOICES = [('良い', '良い'), ('悪い', '悪い')]
+class ReviewModel(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    images = models.ImageField(upload_to='')
+    useful_review = models.IntegerField(null=True, blank=True, default=0)
+    useful_review_record = models.TextField()
+    evaluation = models.CharField(max_length=10, choices=EVALUATION_CHOICES)
 
