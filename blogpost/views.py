@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from .models import BlogModel, ReviewModel
+#from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from .models import ReviewModel
 from django.urls import reverse_lazy
 from django.db import IntegrityError
 from django.contrib.auth.models import User
